@@ -1,0 +1,87 @@
+from playground.network.packet import PacketType
+from playground.network.packet.fieldtypes import UINT32, STRING, BUFFER, BOOL
+
+
+class RequestSentence(PacketType):
+
+    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.RequestSentence"
+    DEFINITION_VERSION = "1.0"
+
+    FIELDS = [
+        ("clientID", UINT32)
+    ]
+
+
+class OriginalSentence(PacketType):
+
+    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.OriginalSentence"
+    DEFINITION_VERSION = "1.0"
+
+    FIELDS = [
+        ("severID", UINT32),
+        ("ackClientID", UINT32),
+        ("originalLanguageType", STRING),
+        ("targetLanguageType", STRING),
+        ("originalSentence", BUFFER)
+    ]
+
+
+class TranlatedSentence(PacketType):
+
+    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.TranlatedSentence"
+    DEFINITION_VERSION = "1.0"
+
+    FIELDS = [
+        ("clientID", UINT32),
+        ("ackSeverID", UINT32),
+        ("translatedSentence", BUFFER)
+
+    ]
+
+
+class Result(PacketType):
+
+    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.Result"
+    DEFINITION_VERSION = "1.0"
+
+    FIELDS = [
+        ("severID", UINT32),
+        ("ackClientID", UINT32),
+        ("passOrNot", BOOL),   # false stand for not pass, true stand for pass
+        ("defaultAnswer", BUFFER)
+    ]
+
+
+def basicUnitTest():
+    packet1 = RequestSentence()
+    packet1.clientID = 1
+    packet1Bytes = packet1.__serialize__()
+    packet1a = RequestSentence.Deserialize(packet1Bytes)
+    assert packet1 == packet1a
+
+    packet2 = OriginalSentence()
+    packet2.severID = 1
+    packet2.ackClientID = 2
+    packet2.originalLanguageType = "English"
+    packet2.targetLanguageType = "Chinese"
+    packet2.originalSentence = b"I love you"
+    packet2Bytes = packet2.__serialize__()
+    packet2a = OriginalSentence.Deserialize(packet2Bytes)
+    assert packet2 == packet2a
+
+    packet3 = TranlatedSentence()
+    packet3.clientID = 2
+    packet3.ackSeverID = 2
+    packet3.translatedSentence = b"woaini"   # it is chinese yapin
+    packet3Bytes = packet3.__serialize__()
+    packet3a = TranlatedSentence.Deserialize(packet3Bytes)
+    assert packet3 == packet3a
+
+    packet4 = Result()
+    packet4.severID = 2
+    packet4.ackClientID = 3
+    packet4.passOrNot = true
+    packet4.defaultAnswer = b"woaini"
+    packet4Bytes = packet4.__serialize__()
+    packet4a = Result.Deserialize(packet4Bytes)
+    assert packet4 == packet4a
