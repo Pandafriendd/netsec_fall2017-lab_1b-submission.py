@@ -25,7 +25,7 @@ from playground.network.packet.fieldtypes import UINT32, STRING, BUFFER, BOOL
 
 class RequestSentence(PacketType):
 
-    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.RequestSentence"
+    DEFINITION_IDENTIFIER = "lab1b.student_Zhiyuan.RequestSentence"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -35,7 +35,7 @@ class RequestSentence(PacketType):
 
 class OriginalSentence(PacketType):
 
-    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.OriginalSentence"
+    DEFINITION_IDENTIFIER = "lab1b.student_Zhiyuan.OriginalSentence"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -49,7 +49,7 @@ class OriginalSentence(PacketType):
 
 class TranlatedSentence(PacketType):
 
-    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.TranlatedSentence"
+    DEFINITION_IDENTIFIER = "lab1b.student_Zhiyuan.TranlatedSentence"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -62,7 +62,7 @@ class TranlatedSentence(PacketType):
 
 class Result(PacketType):
 
-    DEFINITION_IDENTIFIER = "lab2b.student_Zhiyuan.Result"
+    DEFINITION_IDENTIFIER = "lab1b.student_Zhiyuan.Result"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -73,12 +73,18 @@ class Result(PacketType):
     ]
 
 
+print("Hi!")
+
+
 def basicUnitTest():
+
     packet1 = RequestSentence()
     packet1.clientID = 1
     packet1Bytes = packet1.__serialize__()
     packet1a = RequestSentence.Deserialize(packet1Bytes)
     assert packet1 == packet1a
+    if packet1 == packet1a:
+        print("packet1 tested!")
 
     packet2 = OriginalSentence()
     packet2.severID = 1
@@ -89,6 +95,8 @@ def basicUnitTest():
     packet2Bytes = packet2.__serialize__()
     packet2a = OriginalSentence.Deserialize(packet2Bytes)
     assert packet2 == packet2a
+    if packet2 == packet2a:
+        print("packet2 tested!")
 
     packet3 = TranlatedSentence()
     packet3.clientID = 2
@@ -97,12 +105,21 @@ def basicUnitTest():
     packet3Bytes = packet3.__serialize__()
     packet3a = TranlatedSentence.Deserialize(packet3Bytes)
     assert packet3 == packet3a
+    if packet3 == packet3a:
+        print("packet1 tested!")
 
     packet4 = Result()
     packet4.severID = 2
     packet4.ackClientID = 3
-    packet4.passOrNot = true
+    packet4.passOrNot = True
     packet4.defaultAnswer = b"woaini"
     packet4Bytes = packet4.__serialize__()
     packet4a = Result.Deserialize(packet4Bytes)
     assert packet4 == packet4a
+    if packet4 == packet4a:
+        print("packet1 tested!")
+
+
+if __name__ == "__main__":
+    basicUnitTest()
+
