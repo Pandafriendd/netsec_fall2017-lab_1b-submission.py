@@ -106,7 +106,7 @@ def basicUnitTest():
     packet3a = TranlatedSentence.Deserialize(packet3Bytes)
     assert packet3 == packet3a
     if packet3 == packet3a:
-        print("packet1 tested!")
+        print("packet3 tested!")
 
     packet4 = Result()
     packet4.severID = 2
@@ -117,7 +117,7 @@ def basicUnitTest():
     packet4a = Result.Deserialize(packet4Bytes)
     assert packet4 == packet4a
     if packet4 == packet4a:
-        print("packet1 tested!")
+        print("packet4 tested!")
 
 
 if __name__ == "__main__":
